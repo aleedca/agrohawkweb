@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.3c44647e.css",
-    "main.js": "/static/js/main.31337544.js",
-    "static/media/Background_01.jpg": "/static/media/Background_01.73461fb08cbf6b79fd71.jpg",
-    "static/media/Background_02.jpg": "/static/media/Background_02.87be4863c8113a2060d3.jpg",
-    "index.html": "/index.html",
-    "main.3c44647e.css.map": "/static/css/main.3c44647e.css.map",
-    "main.31337544.js.map": "/static/js/main.31337544.js.map"
+    "main.css": "/agrohawkweb/static/css/main.04e4ffc2.css",
+    "main.js": "/agrohawkweb/static/js/main.3f62e7bb.js",
+    "static/media/Background_01.jpg": "/agrohawkweb/static/media/Background_01.73461fb08cbf6b79fd71.jpg",
+    "static/media/Background_02.jpg": "/agrohawkweb/static/media/Background_02.87be4863c8113a2060d3.jpg",
+    "index.html": "/agrohawkweb/index.html",
+    "main.04e4ffc2.css.map": "/agrohawkweb/static/css/main.04e4ffc2.css.map",
+    "main.3f62e7bb.js.map": "/agrohawkweb/static/js/main.3f62e7bb.js.map"
   },
   "entrypoints": [
-    "static/css/main.3c44647e.css",
-    "static/js/main.31337544.js"
+    "static/css/main.04e4ffc2.css",
+    "static/js/main.3f62e7bb.js"
   ]
 }
