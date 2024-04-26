@@ -18,7 +18,7 @@ import DetalleServicio from './Paginas/DetalleServicio';
 
 function App() {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path="/" element={<IniciarSesion />} />
         <Route path="/registrarCuenta" element={<RegistrarCuenta />} />
