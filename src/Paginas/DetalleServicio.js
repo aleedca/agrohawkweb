@@ -39,7 +39,8 @@ function DetalleServicio() {
   }, []);
 
   const navegarServicios = () => {
-    navegar(`/${rol}/buscar/servicios`, { state: { Rol: rol } });
+    //navegar(`/${rol}/buscar/servicios`, { state: { Rol: rol } });
+    navegar(-1, { state: { Rol: rol } });
   };
 
   const navegarPaginaPrincipal = () => {
