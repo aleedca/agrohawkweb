@@ -30,7 +30,7 @@ function ListaServicios() {
     if (location.pathname === '/tecnico/modificar/servicios') {
       navegar(`/${rol}/modificar/servicios-detalle`, { state: { Rol: rol, servicio: servicio } });
     } else {
-      navegar(`/${rol}/buscar/servicios-detalle`, { state: { Rol: rol } });
+      navegar(`/${rol}/buscar/servicios-detalle`, { state: { Rol: rol, servicio: servicio } });
     }
   }
 

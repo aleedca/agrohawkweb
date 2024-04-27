@@ -37,7 +37,6 @@ function BuscarServicio() {
           <div className="columna">
             <h1>{rol === 'administrador' ? 'Administrador' : 'Técnico'}</h1>
             <body>{location.pathname === '/tecnico/modificar-servicios' ? 'Modificar Servicio' : 'Buscar Servicio'}</body><br /><br />
-
             <div className="input-contenedor">
               <FaUser className="icono" />
               <input type="text" placeholder="Número de cédula, formato: 101110111" value={numeroCedula} onChange={(e => setNumeroCedula(e.target.value))} />
