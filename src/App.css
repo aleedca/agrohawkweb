@@ -83,7 +83,7 @@ p {
 
 button {
   padding: 10px 20px;
-  margin: 10px;
+  margin: 8px;
   width: calc(100% - 20px);
   /* Ancho del input menos el padding */
   border: none;
@@ -151,7 +151,7 @@ ul li:hover {
 .contenedor .contenedor-secundario {
   display: flex;
   width: 650px;
-  height: 400px;
+  height: 430px;
   padding: 50px;
 }
 

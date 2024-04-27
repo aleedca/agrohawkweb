@@ -37,6 +37,9 @@ function App() {
         <Route path="/tecnico/buscar/servicios-detalle" element={<DetalleServicio />} />
         <Route path="/tecnico/registrar-servicio" element={<RegistrarServicio />} />
 
+        <Route path="/tecnico/modificar-servicios" element={<BuscarServicio />} />
+        <Route path="/tecnico/modificar/servicios" element={<ListaServicios />} />
+        <Route path="/tecnico/modificar/servicios-detalle" element={<DetalleServicio />} />
 
       </Routes>
     </Router>

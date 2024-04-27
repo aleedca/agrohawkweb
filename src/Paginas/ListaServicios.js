@@ -8,7 +8,11 @@ function ListaServicios() {
   const navegar = useNavigate();
 
   const navegarBuscar = () => {
-    navegar(`/${rol}/buscar-servicios`, { state: { Rol: rol } });
+    if (location.pathname === '/tecnico/modificar/servicios') {
+      navegar(`/${rol}/modificar-servicios`, { state: { Rol: rol } });
+    } else {
+      navegar(`/${rol}/buscar-servicios`, { state: { Rol: rol } });
+    }
   }
 
   const navegarMenu = () => {
@@ -16,7 +20,11 @@ function ListaServicios() {
   }
 
   const navegarDetalleServicio = () => {
-    navegar(`/${rol}/buscar/servicios-detalle`, { state: { Rol: rol } });
+    if (location.pathname === '/tecnico/modificar/servicios') {
+      navegar(`/${rol}/modificar/servicios-detalle`, { state: { Rol: rol } });
+    } else {
+      navegar(`/${rol}/buscar/servicios-detalle`, { state: { Rol: rol } });
+    }
   }
 
   const servicios = [
@@ -38,13 +46,13 @@ function ListaServicios() {
         <div className="contenedor-secundario">
           <div className="columna">
             <h1>Servicios</h1>
-            <body>Seleccione el servicio</body>
+            <body>{location.pathname === '/tecnico/modificar/servicios' ? 'Seleccione el servicio a modificar' : 'Seleccione el servicio a consultar'}</body><br /><br />
             <div className="contenedor-items">
-            <ul>
-              {servicios.map((servicio, index) => (
-                <li key={index} onClick={navegarDetalleServicio}>{servicio}</li>
-              ))}
-            </ul>
+              <ul>
+                {servicios.map((servicio, index) => (
+                  <li key={index} onClick={navegarDetalleServicio}>{servicio}</li>
+                ))}
+              </ul>
             </div>
             <div className="contenedor-botones">
               <button className="btn_principal" onClick={navegarBuscar}>Atrás</button>

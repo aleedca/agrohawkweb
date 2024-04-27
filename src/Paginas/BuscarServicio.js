@@ -9,7 +9,11 @@ function BuscarServicio() {
   const navegar = useNavigate();
 
   const navegarListaServicios = () => {
-    navegar(`/${rol}/buscar/servicios`, { state: { Rol: rol } });
+    if (location.pathname === '/tecnico/modificar-servicios') {
+      navegar(`/${rol}/modificar/servicios`, { state: { Rol: rol } });
+    } else {
+      navegar(`/${rol}/buscar/servicios`, { state: { Rol: rol } });
+    }
   }
 
   const navegarMenu = () => {
@@ -22,7 +26,7 @@ function BuscarServicio() {
         <div className="contenedor-secundario">
           <div className="columna">
             <h1>{rol === 'administrador' ? 'Administrador' : 'Técnico'}</h1>
-            <body>Buscar Servicio</body><br /><br />
+            <body>{location.pathname === '/tecnico/modificar-servicios' ? 'Modificar Servicio' : 'Buscar Servicio'}</body><br /><br />
 
             <div className="input-contenedor">
               <FaUser className="icono" />

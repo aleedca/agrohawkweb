@@ -21,7 +21,7 @@ function TecnicoPaginaPrincipal() {
     };
 
     const navegarModificarServicio = () => {
-        navegar('/tecnico/modificar-servicio');
+        navegar('/tecnico/modificar-servicios', { state: { Rol: rol } });
     };
 
     return (
