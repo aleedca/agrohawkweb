@@ -49,11 +49,6 @@ function ListaServicios() {
                   </li>
                 ))}
               </ul>
-              <ul>
-                {servicios.map((servicio, index) => (
-                  <li key={index} onClick={navegarDetalleServicio}>{servicio}</li>
-                ))}
-              </ul>
             </div>
             <div className="contenedor-botones">
               <button className="btn_principal" onClick={navegarBuscar}>Atrás</button>

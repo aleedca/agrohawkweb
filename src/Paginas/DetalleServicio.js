@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import firestore from '../Firebase/firebase';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { collection, getDocs } from 'firebase/firestore';
 import '../App.css';
 
 function DetalleServicio() {
@@ -8,17 +10,33 @@ function DetalleServicio() {
   const servicio = location.state.servicio; // Obtener el objeto del servicio de la ubicación
   const navegar = useNavigate();
 
-  const [TipoServicio, setTipoServicio] = useState('');
+  const [TipoServicio, setTipoServicio] = useState(servicio.TipoServicio)
   const [Area, setArea] = useState('');
   const [Costo, setCosto] = useState('');
   const [Cultivo, setCultivo] = useState('');
   const [Descripcion, setDescripcion] = useState('');
   const [Dron, setDron] = useState('');
-  const [Cliente, setCliente] = useState('');
+  const [Cliente, setCliente] = useState(servicio.cliente);
   const [Clientes, setClientes] = useState([]);
-  const [Estado, setEstado] = useState('');
+  const [Estado, setEstado] = useState(servicio.Estado);
   const [FechaInicio, setFechaInicio] = useState('');
-  const [FechaFin, setFechaFin] = useState('');
+  const [FechaFin, setFechaFin] = useState(''); 
+
+  useEffect(() => {
+    setCliente(servicio.Cliente);
+  }, [servicio.Cliente]);
+
+  useEffect(() => {
+    setTipoServicio(servicio.TipoServicio);
+  }, [servicio.TipoServicio]);
+
+  useEffect(() => {
+    setEstado(servicio.Estado);
+  }, [servicio.Estado]);
+
+  useEffect(() => {
+    cargarClientes();
+  }, []);
 
   const navegarServicios = () => {
     navegar(`/${rol}/buscar/servicios`, { state: { Rol: rol } });
@@ -27,6 +45,13 @@ function DetalleServicio() {
   const navegarPaginaPrincipal = () => {
     navegar(`/${rol}/pagina-principal`, { state: { Rol: rol } });
   }
+
+  const cargarClientes = async () => {
+    const clientesCollection = collection(firestore, 'Clientes'); // Asegúrate de que 'Clientes' es el nombre correcto de tu colección
+    const clientesSnapshot = await getDocs(clientesCollection);
+    const clientesList = clientesSnapshot.docs.map(doc => ({ label: doc.data().Nombre + " " + doc.data().Apellidos, value: doc.data().Cedula }));
+    setClientes(clientesList);
+  };
 
   const modificarServicio = () => {
     alert("Servicio modificado correctamente");
@@ -38,61 +63,78 @@ function DetalleServicio() {
     navegarPaginaPrincipal();
   }
 
-  console.log("Servicio: ", servicio);
+  const tipos = [
+    { label: 'Servicio de fumigación con drone', value: 'Servicio de fumigación con drone' },
+    { label: 'Servicio se mapeo de finca, inventario de fincas y conteo de plantas de piña', value: 'Servicio se mapeo de finca, inventario de fincas y conteo de plantas de piña' },
+    { label: 'Servicio de monitoreo de maquinaria agrícola', value: 'Servicio de monitoreo de maquinaria agrícola' }
+  ];
+
+  const estados = [
+    { label: 'Sin iniciar', value: 'Sin iniciar' },
+    { label: 'En proceso', value: 'En proceso' },
+    { label: 'Finalizado', value: 'Finalizado' }
+  ];
+
+  console.log('Servicio:', servicio);
   return (
     <div className="fondo-secundario">
       <div className="contenedor">
         <div className="contenedor-terciario">
           <div className="columna">
             <h1>Detalle del Servicio</h1>
-            <p>Tipo de servicio: {servicio.Tipo}</p>
-            <p>Área: {servicio.Area}</p>
-            <p>Costo: {servicio.Costo}</p>
-            <p>Cultivo: {servicio.Cultivo}</p>
-            <p>Descripción: {servicio.Descripcion}</p>
-            <p>Dron utilizado: {servicio.Dron}</p>
-            <p>Estado: {servicio.Estado}</p>
-            <p>Cédula cliente: {servicio.Cliente}</p>
-            <p>Fecha inicio: {servicio.FechaInicio}</p>
-            <p>Fecha fin: {servicio.FechaFin}</p>
             {location.pathname === '/tecnico/modificar/servicios-detalle' ? (
               <div className="input-contenedor">
                 <select className="dropdown" value={Cliente} onChange={(e) => setCliente(e.target.value)}>
                   <option value="">Seleccione un cliente</option>
                   {Clientes.map((cliente, index) => (
                     <option key={index} value={cliente.value}>
-                      {cliente.label}
+                      {cliente.label + " - " + cliente.value}
                     </option>
                   ))}
                 </select>
-                <input type="text" value={TipoServicio} placeholder="Tipo de servicio" onChange={(e) => setTipoServicio(e.target.value)} />
-                <input type="text" value={Area} placeholder="Área (tamaño)" onChange={(e) => setArea(e.target.value)} />
-                <input type="text" value={Costo} placeholder="Costo" onChange={(e) => setCosto(e.target.value)} />
-                <input type="text" value={Cultivo} placeholder="Cultivo" onChange={(e) => setCultivo(e.target.value)} />
-                <input type="text" value={Descripcion} placeholder="Descripción" onChange={(e) => setDescripcion(e.target.value)} />
-                <input type="text" value={Dron} placeholder="Dron utilizado" onChange={(e) => setDron(e.target.value)} />
-                <input type="date" value={FechaInicio} title="Fecha inicio" onChange={(e) => setFechaInicio(e.target.value)} />
-                <input type="date" value={FechaFin} title="Fecha fin" onChange={(e) => setFechaFin(e.target.value)} />
+                <select className="dropdown" value={TipoServicio} onChange={(e) => setTipoServicio(e.target.value)}>
+                  <option value="">Seleccione el tipo de servicio</option>
+                  {tipos.map((tipo, index) => (
+                    <option key={index} value={tipo.value}>
+                      {tipo.label}
+                    </option>
+                  ))}
+                </select>
+                <input type="text" value={servicio.Area} placeholder="Área (tamaño)" onChange={(e) => setArea(e.target.value)} />
+                <input type="text" value={servicio.Costo} placeholder="Costo" onChange={(e) => setCosto(e.target.value)} />
+                <input type="text" value={servicio.Cultivo} placeholder="Cultivo" onChange={(e) => setCultivo(e.target.value)} />
+                <input type="text" value={servicio.Descripcion} placeholder="Descripción" onChange={(e) => setDescripcion(e.target.value)} />
+                <input type="text" value={servicio.Dron} placeholder="Dron utilizado" onChange={(e) => setDron(e.target.value)} />
+                <select className="dropdown" value={Estado} onChange={(e) => setEstado(e.target.value)}>
+                  <option value="">Seleccione un estado</option>
+                  {estados.map((estado, index) => (
+                    <option key={index} value={estado.value}>
+                      {estado.label}
+                    </option>
+                  ))}
+                </select>
+                <input type="date" value={servicio.FechaInicio} title="Fecha inicio" onChange={(e) => setFechaInicio(e.target.value)} />
+                <input type="date" value={servicio.FechaFin} title="Fecha fin" onChange={(e) => setFechaFin(e.target.value)} />
               </div>
             ) : (
               <div>
-                <p>Cedula cliente: {detalles.cedula}</p>
-                <p>Tipo de servicio: {detalles.tipo}</p>
-                <p>Área: {detalles.area}</p>
-                <p>Costo: {detalles.costo}</p>
-                <p>Cultivo: {detalles.cultivo}</p>
-                <p>Descripción: {detalles.descripcion}</p>
-                <p>Dron utilizado: {detalles.dron}</p>
-                <p>Estado: {detalles.estado}</p>
-                <p>Fecha inicio: {detalles.fechaInicio}</p>
-                <p>Fecha fin: {detalles.fechaFin}</p>
+                <p>Cedula cliente: {servicio.Cliente}</p>
+                <p>Tipo de servicio: {servicio.Tipo}</p>
+                <p>Área: {servicio.Area}</p>
+                <p>Costo: {servicio.Costo}</p>
+                <p>Cultivo: {servicio.Cultivo}</p>
+                <p>Descripción: {servicio.Descripcion}</p>
+                <p>Dron utilizado: {servicio.Dron}</p>
+                <p>Estado: {servicio.Estado}</p>
+                <p>Fecha inicio: {servicio.FechaInicio}</p>
+                <p>Fecha fin: {servicio.FechaFin}</p>
               </div>
             )}
-            <div className="contenedor-botones">
+            <div className="contenedor-botones" >
               {location.pathname === '/tecnico/modificar/servicios-detalle' ? (
                 <>
-                  <button className="btn_principal" onClick={modificarServicio}>Modificar</button>
-                  <button className="btn_principal" onClick={eliminarServicio}>Eliminar</button>
+                  <button className="btn_principal" style={{ marginBottom: '-3px', marginTop: '-10px'}} onClick={modificarServicio}>Modificar</button>
+                  <button className="btn_principal" style={{ marginBottom: '-2px', marginTop: '10px'}} onClick={eliminarServicio}>Eliminar</button>
                 </>
               ) : (
                 <button className="btn_principal" onClick={navegarServicios}>Atrás</button>

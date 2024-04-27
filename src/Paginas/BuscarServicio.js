@@ -13,44 +13,44 @@ function BuscarServicio() {
 
   const navegarListaServicios = async () => {
     try {
+      const q = query(collection(firestore, 'Servicios'), where('Cliente', '==', numeroCedula));
+      const querySnapshot = await getDocs(q);
+      const serviciosEncontrados = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       if (location.pathname === '/tecnico/modificar-servicios') {
-        navegar(`/${rol}/modificar/servicios`, { state: { Rol: rol } });
+        navegar(`/${rol}/modificar/servicios`, { state: { Rol: rol, servicios: serviciosEncontrados  } });
       } else {
-        const q = query(collection(firestore, 'Servicios'), where('Cliente', '==', numeroCedula));
-        const querySnapshot = await getDocs(q);
-        const serviciosEncontrados = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         navegar(`/${rol}/buscar/servicios`, { state: { Rol: rol, servicios: serviciosEncontrados } });
       }
     } catch (error) {
       console.error('Error al buscar servicios:', error);
     }
+  }
 
-    const navegarMenu = () => {
-      navegar(`/${rol}/pagina-principal`, { state: { Rol: rol } });
-    }
+  const navegarMenu = () => {
+    navegar(`/${rol}/pagina-principal`, { state: { Rol: rol } });
+  }
 
-    return (
-      <div className="fondo-secundario">
-        <div className="contenedor">
-          <div className="contenedor-secundario">
-            <div className="columna">
-              <h1>{rol === 'administrador' ? 'Administrador' : 'Técnico'}</h1>
-              <body>Buscar Servicio</body><br /><br />
-              <body>{location.pathname === '/tecnico/modificar-servicios' ? 'Modificar Servicio' : 'Buscar Servicio'}</body><br /><br />
+  return (
+    <div className="fondo-secundario">
+      <div className="contenedor">
+        <div className="contenedor-secundario">
+          <div className="columna">
+            <h1>{rol === 'administrador' ? 'Administrador' : 'Técnico'}</h1>
+            <body>{location.pathname === '/tecnico/modificar-servicios' ? 'Modificar Servicio' : 'Buscar Servicio'}</body><br /><br />
 
-              <div className="input-contenedor">
-                <FaUser className="icono" />
-                <input type="text" placeholder="Número de cédula, formato: 101110111" value={numeroCedula} onChange={(e => setNumeroCedula(e.target.value))} />
-              </div><br />
-              <div className="contenedor-botones">
-                <button className="btn_principal" onClick={navegarListaServicios}>Buscar Servicio</button>
-                <button className="btn_secundario" onClick={navegarMenu}>Volver a la Página Principal</button>
-              </div>
+            <div className="input-contenedor">
+              <FaUser className="icono" />
+              <input type="text" placeholder="Número de cédula, formato: 101110111" value={numeroCedula} onChange={(e => setNumeroCedula(e.target.value))} />
+            </div><br />
+            <div className="contenedor-botones">
+              <button className="btn_principal" onClick={navegarListaServicios}>Buscar Servicio</button>
+              <button className="btn_secundario" onClick={navegarMenu}>Volver a la Página Principal</button>
             </div>
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
-  export default BuscarServicio;
+export default BuscarServicio;
