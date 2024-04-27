@@ -33,6 +33,12 @@ function RegistrarServicios() {
     console.log('Clientes cargados:', clientesList);
   };
 
+  const servicios = [
+    { label: 'Servicio de Fumigación con drone', value: 'Servicio de Fumigación con drone' },
+    { label: 'Servicio se mapeo de Finca, inventario de fincas y conteo de plantas de piña', value: 'Servicio se mapeo de Finca, inventario de fincas y conteo de plantas de piña' },
+    { label: 'Servicio de monitoreo de maquinaria agrícola', value: 'Servicio de monitoreo de maquinaria agrícola' }
+  ];
+
   const estados = [
     { label: 'En espera', value: 'En espera' },
     { label: 'En proceso', value: 'En proceso' },
@@ -85,7 +91,15 @@ function RegistrarServicios() {
           <div className="columna">
             <h1>Registrar Servicio</h1>
             <div className="input-contenedor">
-              <input type="text" value={TipoServicio} placeholder="Tipo de servicio" onChange={(e) => setTipoServicio(e.target.value)} />
+            <select className="dropdown" value={TipoServicio} onChange={(e) => setTipoServicio(e.target.value)}>
+                <option value="">Seleccione el tipo de servicio</option>
+                {servicios.map((servicio, index) => (
+                  <option key={index} value={servicio.value}>
+                    {servicio.label}
+                  </option>
+                ))}
+              </select>
+              
               <input type="text" value={Area} placeholder="Área (tamaño)" onChange={(e) => setArea(e.target.value)} />
               <input type="text" value={Costo} placeholder="Costo" onChange={(e) => setCosto(e.target.value)} />
               <input type="text" value={Cultivo} placeholder="Cultivo" onChange={(e) => setCultivo(e.target.value)} />
