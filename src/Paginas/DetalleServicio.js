@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import firestore from '../Firebase/firebase';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import '../App.css';
 
 function DetalleServicio() {
@@ -11,16 +11,16 @@ function DetalleServicio() {
   const navegar = useNavigate();
 
   const [TipoServicio, setTipoServicio] = useState(servicio.TipoServicio)
-  const [Area, setArea] = useState('');
-  const [Costo, setCosto] = useState('');
-  const [Cultivo, setCultivo] = useState('');
-  const [Descripcion, setDescripcion] = useState('');
-  const [Dron, setDron] = useState('');
+  const [Area, setArea] = useState(servicio.Area);
+  const [Costo, setCosto] = useState(servicio.Costo);
+  const [Cultivo, setCultivo] = useState(servicio.Cultivo);
+  const [Descripcion, setDescripcion] = useState(servicio.Descripcion);
+  const [Dron, setDron] = useState(servicio.Dron);
   const [Cliente, setCliente] = useState(servicio.cliente);
   const [Clientes, setClientes] = useState([]);
   const [Estado, setEstado] = useState(servicio.Estado);
-  const [FechaInicio, setFechaInicio] = useState('');
-  const [FechaFin, setFechaFin] = useState(''); 
+  const [FechaInicio, setFechaInicio] = useState(servicio.FechaInicio);
+  const [FechaFin, setFechaFin] = useState(servicio.FechaFin); 
 
   useEffect(() => {
     setCliente(servicio.Cliente);
@@ -54,15 +54,48 @@ function DetalleServicio() {
     setClientes(clientesList);
   };
 
-  const modificarServicio = () => {
+  const modificarServicio = async () => {
+    const servicioQuery = doc(firestore, "Servicios", servicio.id);
+  
+    // Crear un nuevo objeto con los datos originales y los datos actualizados
+    const servicioActualizado = {
+      TipoServicio: TipoServicio || servicio.TipoServicio,
+      Area: Area || servicio.Area,
+      Costo: Costo || servicio.Costo,
+      Cultivo: Cultivo || servicio.Cultivo,
+      Descripcion: Descripcion || servicio.Descripcion,
+      Dron: Dron || servicio.Dron,
+      Cliente: Cliente || servicio.Cliente,
+      Estado: Estado || servicio.Estado,
+      FechaInicio: FechaInicio || servicio.FechaInicio,
+      FechaFin: FechaFin || servicio.FechaFin
+    };
+  
+    // Actualizar solo los campos que han cambiado
+    await updateDoc(servicioQuery, servicioActualizado);
+
     alert("Servicio modificado correctamente");
     navegarPaginaPrincipal();
   }
 
-  const eliminarServicio = () => {
-    alert("Servicio eliminado correctamente");
-    navegarPaginaPrincipal();
-  }
+  const eliminarServicio = async () => {
+    try {
+      const servicioQuery = doc(firestore, "Servicios", servicio.id);
+    
+      // Eliminar el servicio de la base de datos
+      await deleteDoc(servicioQuery);
+  
+      // Mostrar un mensaje de éxito
+      alert("Servicio eliminado correctamente");
+  
+      // Redirigir al usuario a la página principal
+      navegarPaginaPrincipal();
+    } catch (error) {
+      console.error("Error al eliminar el servicio:", error);
+      // Mostrar un mensaje de error al usuario
+      alert("Error al eliminar el servicio. Por favor, inténtalo de nuevo más tarde.");
+    }
+  }  
 
   const tipos = [
     { label: 'Servicio de fumigación con drone', value: 'Servicio de fumigación con drone' },
@@ -101,11 +134,11 @@ function DetalleServicio() {
                     </option>
                   ))}
                 </select>
-                <input type="text" value={servicio.Area} placeholder="Área (tamaño)" onChange={(e) => setArea(e.target.value)} />
-                <input type="text" value={servicio.Costo} placeholder="Costo" onChange={(e) => setCosto(e.target.value)} />
-                <input type="text" value={servicio.Cultivo} placeholder="Cultivo" onChange={(e) => setCultivo(e.target.value)} />
-                <input type="text" value={servicio.Descripcion} placeholder="Descripción" onChange={(e) => setDescripcion(e.target.value)} />
-                <input type="text" value={servicio.Dron} placeholder="Dron utilizado" onChange={(e) => setDron(e.target.value)} />
+                <input type="text" value={Area} placeholder="Área (tamaño)" onChange={(e) => setArea(e.target.value)} />
+                <input type="text" value={Costo} placeholder="Costo" onChange={(e) => setCosto(e.target.value)} />
+                <input type="text" value={Cultivo} placeholder="Cultivo" onChange={(e) => setCultivo(e.target.value)} />
+                <input type="text" value={Descripcion} placeholder="Descripción" onChange={(e) => setDescripcion(e.target.value)} />
+                <input type="text" value={Dron} placeholder="Dron utilizado" onChange={(e) => setDron(e.target.value)} />
                 <select className="dropdown" value={Estado} onChange={(e) => setEstado(e.target.value)}>
                   <option value="">Seleccione un estado</option>
                   {estados.map((estado, index) => (
@@ -114,8 +147,8 @@ function DetalleServicio() {
                     </option>
                   ))}
                 </select>
-                <input type="date" value={servicio.FechaInicio} title="Fecha inicio" onChange={(e) => setFechaInicio(e.target.value)} />
-                <input type="date" value={servicio.FechaFin} title="Fecha fin" onChange={(e) => setFechaFin(e.target.value)} />
+                <input type="date" value={FechaInicio} title="Fecha inicio" onChange={(e) => setFechaInicio(e.target.value)} />
+                <input type="date" value={FechaFin} title="Fecha fin" onChange={(e) => setFechaFin(e.target.value)} />
               </div>
             ) : (
               <div>
