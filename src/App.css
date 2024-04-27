@@ -175,7 +175,7 @@ ul li:hover {
   position: relative;
 }
 
-.input-contenedor input[type=text],
+.input-contenedor input[type=text], input[type=dropdown],
 input[type="password"], input[type="date"], select {
   font-weight: regular;
   font-family: var(--font);
