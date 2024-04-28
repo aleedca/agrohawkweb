@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/agrohawkweb/static/css/main.90581738.css",
-    "main.js": "/agrohawkweb/static/js/main.7e527b65.js",
+    "main.js": "/agrohawkweb/static/js/main.0ebbd60c.js",
     "static/media/Background_01.jpg": "/agrohawkweb/static/media/Background_01.73461fb08cbf6b79fd71.jpg",
     "static/media/Background_02.jpg": "/agrohawkweb/static/media/Background_02.87be4863c8113a2060d3.jpg",
     "index.html": "/agrohawkweb/index.html",
     "main.90581738.css.map": "/agrohawkweb/static/css/main.90581738.css.map",
-    "main.7e527b65.js.map": "/agrohawkweb/static/js/main.7e527b65.js.map"
+    "main.0ebbd60c.js.map": "/agrohawkweb/static/js/main.0ebbd60c.js.map"
   },
   "entrypoints": [
     "static/css/main.90581738.css",
-    "static/js/main.7e527b65.js"
+    "static/js/main.0ebbd60c.js"
   ]
 }
