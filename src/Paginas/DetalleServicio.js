@@ -55,6 +55,19 @@ function DetalleServicio() {
   };
 
   const modificarServicio = async () => {
+    
+    // Validar los campos de entrada
+    if (!TipoServicio || !Area || !Costo || !Cultivo || !Descripcion || !Dron || !Estado || !Cliente || !FechaInicio || !FechaFin) {
+      alert('Por favor, completa todos los campos.');
+      return;
+    }
+
+    // Validar las fechas
+    if (new Date(FechaInicio) >= new Date(FechaFin)) {
+      alert('La fecha de fin debe ser mayor que la fecha de inicio.');
+      return;
+    }
+    
     const servicioQuery = doc(firestore, "Servicios", servicio.id);
   
     // Crear un nuevo objeto con los datos originales y los datos actualizados
@@ -80,22 +93,27 @@ function DetalleServicio() {
 
   const eliminarServicio = async () => {
     try {
-      const servicioQuery = doc(firestore, "Servicios", servicio.id);
+      const confirmacion = window.confirm("¿Estás seguro que deseas eliminar este servicio?");
+      
+      if (confirmacion) {
+        const servicioRef = doc(firestore, "Servicios", servicio.id);
+      
+        // Eliminar el servicio de la base de datos
+        await deleteDoc(servicioRef);
     
-      // Eliminar el servicio de la base de datos
-      await deleteDoc(servicioQuery);
-  
-      // Mostrar un mensaje de éxito
-      alert("Servicio eliminado correctamente");
-  
-      // Redirigir al usuario a la página principal
-      navegarPaginaPrincipal();
+        // Mostrar un mensaje de éxito
+        alert("Servicio eliminado correctamente");
+    
+        // Redirigir al usuario a la página principal
+        navegarPaginaPrincipal();
+      }
     } catch (error) {
       console.error("Error al eliminar el servicio:", error);
       // Mostrar un mensaje de error al usuario
       alert("Error al eliminar el servicio. Por favor, inténtalo de nuevo más tarde.");
     }
-  }  
+  }
+  
 
   const tipos = [
     { label: 'Servicio de fumigación con drone', value: 'Servicio de fumigación con drone' },
