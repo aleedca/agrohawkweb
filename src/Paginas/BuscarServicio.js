@@ -11,15 +11,21 @@ function BuscarServicio() {
   const navegar = useNavigate();
   const [numeroCedula, setNumeroCedula] = useState('');
 
+
   const navegarListaServicios = async () => {
     try {
-      const q = query(collection(firestore, 'Servicios'), where('Cliente', '==', numeroCedula));
-      const querySnapshot = await getDocs(q);
-      const serviciosEncontrados = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      if (location.pathname === '/tecnico/modificar-servicios') {
-        navegar(`/${rol}/modificar/servicios`, { state: { Rol: rol, servicios: serviciosEncontrados  } });
+      if (!numeroCedula) {
+        alert('Por favor, ingrese un número de cédula');
+        return;
       } else {
-        navegar(`/${rol}/buscar/servicios`, { state: { Rol: rol, servicios: serviciosEncontrados } });
+        const q = query(collection(firestore, 'Servicios'), where('Cliente', '==', numeroCedula));
+        const querySnapshot = await getDocs(q);
+        const serviciosEncontrados = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        if (location.pathname === '/tecnico/modificar-servicios') {
+          navegar(`/${rol}/modificar/servicios`, { state: { Rol: rol, servicios: serviciosEncontrados } });
+        } else {
+          navegar(`/${rol}/buscar/servicios`, { state: { Rol: rol, servicios: serviciosEncontrados } });
+        }
       }
     } catch (error) {
       console.error('Error al buscar servicios:', error);

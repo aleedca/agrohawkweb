@@ -34,6 +34,11 @@ function ListaServicios() {
     }
   }
 
+  const formatearFecha = (fecha) => {
+    const fechaFormateada = new Date(fecha);
+    return (fechaFormateada.getDate() + 1) + '/' + (fechaFormateada.getMonth() + 1) + '/' + fechaFormateada.getFullYear();
+  }
+
   return (
     <div className="fondo-secundario">
       <div className="contenedor">
@@ -43,11 +48,15 @@ function ListaServicios() {
             <body>{location.pathname === '/tecnico/modificar/servicios' ? 'Seleccione el servicio a modificar' : 'Seleccione el servicio a consultar'}</body><br /><br />
             <div className="contenedor-items">
               <ul>
-                {servicios.map(servicio => (
-                  <li key={servicio.id} onClick={() => navegarDetalleServicio(servicio.id, servicio)}>
-                    Fecha de Inicio: {servicio.FechaInicio}
-                  </li>
-                ))}
+                {servicios.length > 0 ? (
+                  servicios.map(servicio => (
+                    <li key={servicio.id} onClick={() => navegarDetalleServicio(servicio.id, servicio)}>
+                      Fecha de Inicio: {formatearFecha(servicio.FechaInicio)}
+                    </li>
+                  ))
+                ) : (
+                  <p style={{textAlign: 'center', color: 'red'}}>No hay servicios asociados a este cliente.</p>
+                )}
               </ul>
             </div>
             <div className="contenedor-botones">

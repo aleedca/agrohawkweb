@@ -6,7 +6,7 @@ import { collection, addDoc } from 'firebase/firestore';
 import '../App.css';
 
 function RegistrarCuenta() {
-    const [Usuario, setUsuario] = useState('');
+    const [Nombre, setNombre] = useState('');
     const [Apellidos, setApellidos] = useState('');
     const [Email, setEmail] = useState('');
     const [Password, setPassword] = useState('');
@@ -19,17 +19,22 @@ function RegistrarCuenta() {
 
     const registrarUsuario = async () => {
         try {
-            const datosUsuario = {
-                Usuario,
-                Apellidos,
-                Email,
-                Password,
-                Rol
-            };
-            const docRef = await addDoc(collection(firestore, 'Usuarios'), datosUsuario);
-            console.log('Documento insertado con ID: ', docRef.id);
-            alert("Cuenta agregada con éxito");
-            navegar('/');
+            if (!Nombre || !Apellidos || !Email || !Password || !Rol) {
+                alert("Por favor, rellene todos los campos.");
+                return;
+            } else {
+                const datosUsuario = {
+                    Nombre,
+                    Apellidos,
+                    Email,
+                    Password,
+                    Rol
+                };
+                const docRef = await addDoc(collection(firestore, 'Usuarios'), datosUsuario);
+                console.log('Documento insertado con ID: ', docRef.id);
+                alert("Cuenta agregada con éxito");
+                navegar('/');
+            }
         } catch (error) {
             console.error('Error al insertar el documento: ', error);
         }
@@ -45,7 +50,7 @@ function RegistrarCuenta() {
                     <div className="columna">
                         <div className="input-contenedor">
                             <FaUser className="icono" />
-                            <input type="text" placeholder="Usuario" value={Usuario} onChange={(e) => setUsuario(e.target.value)} />
+                            <input type="text" placeholder="Nombre" value={Nombre} onChange={(e) => setNombre(e.target.value)} />
                         </div>
                         <div className="input-contenedor">
                             <FaEnvelope className="icono" />
@@ -63,7 +68,7 @@ function RegistrarCuenta() {
                         </div>
                     </div>
                 </div>
-                <div style={{ marginTop: '-300px', marginLeft: '40px', marginRight: '40px' }}>
+                <div style={{ marginTop: '-350px', marginLeft: '40px', marginRight: '40px' }}>
                     {/* Inputs fuera de las columnas */}
                     <body>Seleccione su rol</body>
                     <div className="columna">
