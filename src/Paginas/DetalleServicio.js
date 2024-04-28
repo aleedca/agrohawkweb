@@ -99,7 +99,7 @@ function DetalleServicio() {
     // Actualizar solo los campos que han cambiado
     await updateDoc(servicioQuery, servicioActualizado);
 
-    alert("Servicio modificado correctamente");
+    alert("Servicio modificado con éxito");
     navegarPaginaPrincipal();
   }
 
@@ -114,7 +114,7 @@ function DetalleServicio() {
         await deleteDoc(servicioRef);
 
         // Mostrar un mensaje de éxito
-        alert("Servicio eliminado correctamente");
+        alert("Servicio eliminado con éxito");
 
         // Redirigir al usuario a la página principal
         navegarPaginaPrincipal();

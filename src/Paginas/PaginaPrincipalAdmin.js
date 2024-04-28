@@ -33,8 +33,8 @@ function AdminPaginaPrincipal() {
                         <h1>Administrador</h1>
                         <body>Página Principal</body>
                         <div className='contenedor-botones'>
-                            <button className="btn_verde" onClick={navegarRegistrarCliente}>Registrar Cliente</button>
                             <button className="btn_verde" onClick={navegarBuscarCliente}>Buscar Cliente</button>
+                            <button className="btn_verde" onClick={navegarRegistrarCliente}>Registrar Cliente</button>
                             <button className="btn_verde" onClick={navegarBuscarServicio}>Buscar Servicio</button>
                             <button className="btn_rojo" onClick={navegarIniciarSesion}>Cerrar sesión</button>
                         </div>
