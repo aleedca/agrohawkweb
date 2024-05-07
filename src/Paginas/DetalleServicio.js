@@ -11,20 +11,25 @@ function DetalleServicio() {
   const navegar = useNavigate();
 
   const [TipoServicio, setTipoServicio] = useState(servicio.TipoServicio)
-  const [Area, setArea] = useState(servicio.Area);
+  const [Hectareas, setHectareas] = useState(servicio.Hectareas);
   const [Costo, setCosto] = useState(servicio.Costo);
+  const [TipoCosto, setTipoCosto] = useState(servicio.TipoCosto);
   const [Cultivo, setCultivo] = useState(servicio.Cultivo);
   const [Descripcion, setDescripcion] = useState(servicio.Descripcion);
   const [Dron, setDron] = useState(servicio.Dron);
+  const [Piloto, setPiloto] = useState(servicio.Piloto);
   const [Cliente, setCliente] = useState(servicio.cliente);
   const [Clientes, setClientes] = useState([]);
   const [Estado, setEstado] = useState(servicio.Estado);
   const [FechaInicio, setFechaInicio] = useState(servicio.FechaInicio);
   const [FechaFin, setFechaFin] = useState(servicio.FechaFin);
+  const [Contrato, setContrato] = useState(servicio.Contrato);
+  const [CantidadContrato, setCantidadContrato] = useState(servicio.CantidadContrato);
+  const [Periodicidad, setPeriodicidad] = useState(servicio.Periodicidad);
 
   const tipos = [
     { label: 'Servicio de fumigación con drone', value: 'Servicio de fumigación con drone' },
-    { label: 'Servicio se mapeo de finca, inventario de fincas y conteo de plantas de piña', value: 'Servicio se mapeo de finca, inventario de fincas y conteo de plantas de piña' },
+    { label: 'Servicio de mapeo de finca, inventario de fincas y conteo de plantas de piña', value: 'Servicio se mapeo de finca, inventario de fincas y conteo de plantas de piña' },
     { label: 'Servicio de monitoreo de maquinaria agrícola', value: 'Servicio de monitoreo de maquinaria agrícola' }
   ];
 
@@ -45,6 +50,14 @@ function DetalleServicio() {
   useEffect(() => {
     setEstado(servicio.Estado);
   }, [servicio.Estado]);
+
+  useEffect(() => {
+    setTipoCosto(servicio.TipoCosto);
+  }, [servicio.TipoCosto]);
+
+  useEffect(() => {
+    setContrato(servicio.Contrato);
+  }, [servicio.Contrato]);
 
   useEffect(() => {
     cargarClientes();
@@ -69,8 +82,14 @@ function DetalleServicio() {
   const modificarServicio = async () => {
 
     // Validar los campos de entrada
-    if (!TipoServicio || !Area || !Costo || !Cultivo || !Descripcion || !Dron || !Estado || !Cliente || !FechaInicio || !FechaFin) {
+    if (!TipoServicio || !Hectareas || !Costo || !Cultivo || !Descripcion || !Dron || !Estado || !Cliente || !FechaInicio || !FechaFin || !Periodicidad || !TipoCosto || !Piloto) {
       alert('Por favor, completa todos los campos.');
+      return;
+    }
+
+    // Validar que la cantidad de contrato sea mayor a 0 si el servicio es un contrato
+    if (Contrato === "Sí" && !CantidadContrato) {
+      alert('Por favor, completa la cantidad de días del contrato.');
       return;
     }
 
@@ -80,20 +99,31 @@ function DetalleServicio() {
       return;
     }
 
+    // Validar que la fecha de fin no sea mayor a la fecha actual si el estado es finalizado
+    if (Estado === "Finalizado" && new Date(FechaFin) > new Date()) {
+      alert('La fecha de fin no puede ser mayor a la fecha actual si el estado es finalizado.');
+      return;
+    }
+
     const servicioQuery = doc(firestore, "Servicios", servicio.id);
 
     // Crear un nuevo objeto con los datos originales y los datos actualizados
     const servicioActualizado = {
       TipoServicio: TipoServicio || servicio.TipoServicio,
-      Area: Area || servicio.Area,
+      Hectareas: Hectareas || servicio.Hectareas,
       Costo: Costo || servicio.Costo,
+      TipoCosto: TipoCosto || servicio.TipoCosto,
       Cultivo: Cultivo || servicio.Cultivo,
       Descripcion: Descripcion || servicio.Descripcion,
       Dron: Dron || servicio.Dron,
+      Piloto: Piloto || servicio.Piloto,
       Cliente: Cliente || servicio.Cliente,
       Estado: Estado || servicio.Estado,
       FechaInicio: FechaInicio || servicio.FechaInicio,
-      FechaFin: FechaFin || servicio.FechaFin
+      FechaFin: FechaFin || servicio.FechaFin,
+      Contrato: Contrato || servicio.Contrato,
+      CantidadContrato: CantidadContrato || servicio.CantidadContrato,
+      Periodicidad: Periodicidad || servicio.Periodicidad
     };
 
     // Actualizar solo los campos que han cambiado
@@ -155,40 +185,82 @@ function DetalleServicio() {
                     </option>
                   ))}
                 </select>
-                <input type="text" value={Area} placeholder="Área (tamaño)" onChange={(e) => setArea(e.target.value)} />
-                <input type="text" value={Costo} placeholder="Costo (dólares)" onChange={(e) => setCosto(e.target.value)} />
-                <input type="text" value={Cultivo} placeholder="Cultivo" onChange={(e) => setCultivo(e.target.value)} />
-                <input type="text" value={Descripcion} placeholder="Descripción" onChange={(e) => setDescripcion(e.target.value)} />
-                <input type="text" value={Dron} placeholder="Dron utilizado" onChange={(e) => setDron(e.target.value)} />
-                <select className="dropdown" value={Estado} onChange={(e) => setEstado(e.target.value)}>
-                  <option value="">Seleccione un estado</option>
-                  {estados.map((estado, index) => (
-                    <option key={index} value={estado.value}>
-                      {estado.label}
-                    </option>
-                  ))}
-                </select>
-                <input type="date" value={FechaInicio} title="Fecha inicio" onChange={(e) => setFechaInicio(e.target.value)} />
-                <input type="date" value={FechaFin} title="Fecha fin" onChange={(e) => setFechaFin(e.target.value)} />
+                <div className="fila">
+                  <select className="dropdown" value={TipoCosto} onChange={(e) => setTipoCosto(e.target.value)}>
+                    <option value="">Seleccione una moneda</option>
+                    <option value={"Dólares"}>Dólares</option>
+                    <option value={"Colones"}>Colones</option>
+                  </select>
+                  <input type="text" value={Costo} placeholder="Costo" onChange={(e) => setCosto(e.target.value)} />
+                </div>
+                <div className="fila">
+                  <input type="text" value={Cultivo} placeholder="Cultivo" onChange={(e) => setCultivo(e.target.value)} />
+                  <input type="text" value={Descripcion} placeholder="Descripción" onChange={(e) => setDescripcion(e.target.value)} />
+                </div>
+                <div className="fila">
+                  <input type="text" value={Dron} placeholder="Matrícula del drone" onChange={(e) => setDron(e.target.value)} />
+                  <input type="text" value={Piloto} placeholder="Piloto del drone" onChange={(e) => setPiloto(e.target.value)} />
+                </div>
+                <div className="fila">
+                  <input type="text" value={Hectareas} placeholder="Hectáreas" onChange={(e) => setHectareas(e.target.value)} />
+                  <select className="dropdown" value={Estado} onChange={(e) => setEstado(e.target.value)}>
+                    <option value="">Seleccione un estado</option>
+                    {estados.map((estado, index) => (
+                      <option key={index} value={estado.value}>
+                        {estado.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="fila">
+                  <input type="date" value={FechaInicio} title="Fecha inicio" onChange={(e) => setFechaInicio(e.target.value)} />
+                  <input type="date" value={FechaFin} title="Fecha fin" onChange={(e) => setFechaFin(e.target.value)} />
+                  <input type="number" min="0" value={Periodicidad} placeholder="Periodicidad por semana" onChange={(e) => setPeriodicidad(e.target.value)} />
+                </div> <br />
+                <label style={{ fontSize: '14px' }}> ¿El servicio es un contrato? </label>
+                <div className="fila">
+                  <select className="dropdown" value={Contrato} onChange={(e) => setContrato(e.target.value)}>
+                    <option value="">Seleccione una opción</option>
+                    <option value="Sí">Sí</option>
+                    <option value="No">No</option>
+                  </select>
+                  {Contrato === "Sí" && (
+                    <input type="number" min="0" value={CantidadContrato} placeholder="Cantidad en días" onChange={(e) => setCantidadContrato(e.target.value)} />
+                  )}
+                </div>
               </div>
             ) : (
-              <div>
+              <div className='input-contenedor'>
                 <p>Cedula cliente: {servicio.Cliente}</p>
                 <p>Tipo de servicio: {servicio.TipoServicio}</p>
-                <p>Área: {servicio.Area}</p>
-                <p>Costo: {servicio.Costo}</p>
-                <p>Cultivo: {servicio.Cultivo}</p>
+                <p>Hectáreas: {servicio.Hectareas}</p>
+                <div className="fila">
+                  <p>Costo: {servicio.Costo + " " + servicio.TipoCosto}</p>
+                  <p>Cultivo: {servicio.Cultivo}</p>
+                </div>
                 <p>Descripción: {servicio.Descripcion}</p>
-                <p>Dron utilizado: {servicio.Dron}</p>
-                <p>Estado: {servicio.Estado}</p>
-                <p>Fecha inicio: {formatearFecha(servicio.FechaInicio)}</p>
-                <p>Fecha fin: {formatearFecha(servicio.FechaFin)}</p>
+                <div className="fila">
+                  <p>Dron utilizado: {servicio.Dron}</p>
+                  <p>Piloto del drone: {servicio.Piloto}</p>
+                </div>
+                <div className="fila">
+                  <p>Fecha inicio: {formatearFecha(servicio.FechaInicio)}</p>
+                  <p>Fecha fin: {formatearFecha(servicio.FechaFin)}</p>
+                  <p>Estado: {servicio.Estado}</p>
+                </div>
+                <div className="fila">
+                  <p>Contrato: {servicio.Contrato}</p>
+                  {servicio.Contrato === "Sí" && (
+                    <p>Cantidad de tiempo del contrato: {servicio.CantidadContrato + " "} días</p>
+                  )}
+                </div>
+                <p>Periodicidad por semana: {servicio.Periodicidad}</p>
               </div>
             )}
             <div className="contenedor-botones" >
               {location.pathname === '/tecnico/modificar/servicios-detalle' ? (
                 <div>
-                  <button className="btn_principal" style={{ marginBottom: '-3px', marginTop: '-10px'}} onClick={modificarServicio}>Modificar</button>
+                  <button className="btn_principal" style={{ marginBottom: '-3px', marginTop: '-10px' }} onClick={modificarServicio}>Modificar</button>
                   <button className="btn_principal" style={{ marginBottom: '-2px', marginTop: '10px' }} onClick={eliminarServicio}>Eliminar</button>
                   <button className="btn_secundario" onClick={navegarServicios}>Atrás</button>
                 </div>
