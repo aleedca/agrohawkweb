@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import firestore from '../Firebase/firebase';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { collection, getDocs, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { tiposServicios, estados, tiposCosto, opcionesContrato } from '../Utils/Data';
 import '../App.css';
 
 function DetalleServicio() {
@@ -26,18 +27,6 @@ function DetalleServicio() {
   const [Contrato, setContrato] = useState(servicio.Contrato);
   const [CantidadContrato, setCantidadContrato] = useState(servicio.CantidadContrato);
   const [Periodicidad, setPeriodicidad] = useState(servicio.Periodicidad);
-
-  const tipos = [
-    { label: 'Servicio de fumigación con drone', value: 'Servicio de fumigación con drone' },
-    { label: 'Servicio de mapeo de finca, inventario de fincas y conteo de plantas de piña', value: 'Servicio se mapeo de finca, inventario de fincas y conteo de plantas de piña' },
-    { label: 'Servicio de monitoreo de maquinaria agrícola', value: 'Servicio de monitoreo de maquinaria agrícola' }
-  ];
-
-  const estados = [
-    { label: 'Sin iniciar', value: 'Sin iniciar' },
-    { label: 'En proceso', value: 'En proceso' },
-    { label: 'Finalizado', value: 'Finalizado' }
-  ];
 
   useEffect(() => {
     setCliente(servicio.Cliente);
@@ -179,7 +168,7 @@ function DetalleServicio() {
                 </select>
                 <select className="dropdown" value={TipoServicio} onChange={(e) => setTipoServicio(e.target.value)}>
                   <option value="">Seleccione el tipo de servicio</option>
-                  {tipos.map((tipo, index) => (
+                  {tiposServicios.map((tipo, index) => (
                     <option key={index} value={tipo.value}>
                       {tipo.label}
                     </option>
@@ -188,8 +177,11 @@ function DetalleServicio() {
                 <div className="fila">
                   <select className="dropdown" value={TipoCosto} onChange={(e) => setTipoCosto(e.target.value)}>
                     <option value="">Seleccione una moneda</option>
-                    <option value={"Dólares"}>Dólares</option>
-                    <option value={"Colones"}>Colones</option>
+                    {tiposCosto.map((tipo, index) => (
+                      <option key={index} value={tipo.value}>
+                        {tipo.label}
+                      </option>
+                    ))}
                   </select>
                   <input type="text" value={Costo} placeholder="Costo" onChange={(e) => setCosto(e.target.value)} />
                 </div>
@@ -221,8 +213,11 @@ function DetalleServicio() {
                 <div className="fila">
                   <select className="dropdown" value={Contrato} onChange={(e) => setContrato(e.target.value)}>
                     <option value="">Seleccione una opción</option>
-                    <option value="Sí">Sí</option>
-                    <option value="No">No</option>
+                    {opcionesContrato.map((opcion, index) => (
+                      <option key={index} value={opcion.value}>
+                        {opcion.label}
+                      </option>
+                    ))}
                   </select>
                   {Contrato === "Sí" && (
                     <input type="number" min="0" value={CantidadContrato} placeholder="Cantidad en días" onChange={(e) => setCantidadContrato(e.target.value)} />

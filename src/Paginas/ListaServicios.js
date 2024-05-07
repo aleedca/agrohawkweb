@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { formatearFecha } from '../Utils/Funciones';
 import '../App.css';
 
 function ListaServicios() {
@@ -32,11 +33,6 @@ function ListaServicios() {
     } else {
       navegar(`/${rol}/buscar/servicios-detalle`, { state: { Rol: rol, servicio: servicio } });
     }
-  }
-
-  const formatearFecha = (fecha) => {
-    const fechaFormateada = new Date(fecha);
-    return (fechaFormateada.getDate() + 1) + '/' + (fechaFormateada.getMonth() + 1) + '/' + fechaFormateada.getFullYear();
   }
 
   return (
