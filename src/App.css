@@ -68,22 +68,25 @@ body {
   color: var(--color-300);
 }
 
+textarea {
+  width: 300px;
+  height: 100px;
+  resize: none;
+  font-size: 13px;
+}
+
 button {
   padding: 10px 20px;
-  margin: 8px;
-  width: calc(100% - 20px);
-  /* Ancho del input menos el padding */
+  margin: 8px 0px 8px 0px;
+  width: 80%;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  /* Transición de 0.3 segundos */
 }
 
-/* Estilo para los botones al pasar el cursor */
 button:hover {
   opacity: 0.7;
-  /* Reducción de la opacidad al pasar el cursor */
   transform: scale(1.03);
 }
 
@@ -107,18 +110,14 @@ ul li:hover {
 
 .contenedor {
   border-radius: 30px;
-  /* Borde redondeado */
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  /* Sombra */
   background-color: rgba(255, 255, 255, 0.6);
-  /* Color de fondo con transparencia */
   text-align: center;
   justify-content: center;
   font-family: var(--font);
   position: center;
 
   position: absolute;
-  /* Centrar el contenedor */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -152,9 +151,15 @@ ul li:hover {
   flex: 1;
 }
 
+.columna:first-child {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
 .contenedor .fila {
   display: flex;
   justify-content: space-between;
+  gap: 10px;
 }
 
 .contenedor-rol {
@@ -168,7 +173,7 @@ ul li:hover {
 }
 
 .input-contenedor input[type=text], input[type=number],
-input[type=password], input[type=date], select, p {
+input[type=password], input[type=date], select, p, textarea{
   font-weight: regular;
   font-family: var(--font);
   background-color: var(--color-700);
@@ -177,25 +182,25 @@ input[type=password], input[type=date], select, p {
 
   width: 100%;
   padding: 10px;
-  margin: 7px 5px 5px 5px;
+  margin: 6.5px 0px;
   border: 1px solid var(--color-400);
   border-radius: 6px;
   box-sizing: border-box;
 }
 
 .input-contenedor select, p {
-  width: 98.5%;
+  width: 100%;
 }
 
 .input-contenedor p {
   text-align: left;
 }
 
-.icono {
+.input-contenedor .icono {
   position: absolute;
   left: 15px;
   /* Ajusta la posición del icono según tus necesidades */
-  top: 35%;
+  top: 50%;
   /* Alinea verticalmente el icono */
   transform: translateY(-50%);
   /* Centra verticalmente el icono */
@@ -206,6 +211,7 @@ input[type=password], input[type=date], select, p {
   justify-content: space-between;
   padding: 15px;
   display: inline-block;
+  width: 400px;
   margin-bottom: 10px;
 }
 

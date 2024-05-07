@@ -6,6 +6,7 @@ import IniciarSesion from './Paginas/IniciarSesion';
 import RegistrarCuenta from './Paginas/RegistrarCuenta';
 import PaginaPrincipalAdmin from './Paginas/PaginaPrincipalAdmin';
 import PaginaPrincipalTecnico from './Paginas/PaginaPrincipalTecnico';
+import PaginaPrincipalAnalista from './Paginas/PaginaPrincipalAnalista';
 
 import RegistrarCliente from './Paginas/RegistrarCliente';
 import BuscarCliente from './Paginas/BuscarCliente';
@@ -16,6 +17,10 @@ import BuscarServicio from './Paginas/BuscarServicio';
 import ListaServicios from './Paginas/ListaServicios';
 import DetalleServicio from './Paginas/DetalleServicio';
 
+import GenerarReporte from './Paginas/GenerarReporte';
+import VerEstadisticasGenerales from './Paginas/VerEstadisticasGenerales';
+import VerReportes from './Paginas/VerReportes';
+
 function App() {
   return (
     <Router basename={process.env.PUBLIC_URL}>
@@ -24,6 +29,7 @@ function App() {
         <Route path="/registrarCuenta" element={<RegistrarCuenta />} />
         <Route path="/administrador/pagina-principal" element={<PaginaPrincipalAdmin />} />
         <Route path="/tecnico/pagina-principal" element={<PaginaPrincipalTecnico />} />
+        <Route path="/analista/pagina-principal" element={<PaginaPrincipalAnalista />} />
 
         <Route path="/administrador/registrar-cliente" element={<RegistrarCliente />} />
         <Route path="/administrador/buscar-servicios" element={<BuscarServicio />} />
@@ -40,6 +46,10 @@ function App() {
         <Route path="/tecnico/modificar-servicios" element={<BuscarServicio />} />
         <Route path="/tecnico/modificar/servicios" element={<ListaServicios />} />
         <Route path="/tecnico/modificar/servicios-detalle" element={<DetalleServicio />} />
+
+        <Route path="/analista/estadisticas-generales" element={<VerEstadisticasGenerales />} />
+        <Route path="/analista/reportes" element={<VerReportes />} />
+        <Route path="/analista/generar-reporte" element={<GenerarReporte />} />
 
       </Routes>
     </Router>
