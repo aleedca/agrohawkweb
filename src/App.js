@@ -20,6 +20,7 @@ import DetalleServicio from './Paginas/DetalleServicio';
 import GenerarReporte from './Paginas/GenerarReporte';
 import VerEstadisticasGenerales from './Paginas/VerEstadisticasGenerales';
 import VerReportes from './Paginas/VerReportes';
+import DetalleReporte from './Paginas/DetalleReporte';
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
 
         <Route path="/analista/estadisticas-generales" element={<VerEstadisticasGenerales />} />
         <Route path="/analista/reportes" element={<VerReportes />} />
+        <Route path="/analista/reportes-detalle" element={<DetalleReporte />} />
         <Route path="/analista/generar-reporte" element={<GenerarReporte />} />
 
       </Routes>
