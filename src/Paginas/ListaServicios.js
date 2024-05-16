@@ -51,7 +51,7 @@ function ListaServicios() {
                     </li>
                   ))
                 ) : (
-                  <p style={{textAlign: 'center', color: 'red'}}>No hay servicios asociados a este cliente.</p>
+                  <p style={{ textAlign: 'center', color: 'red', background: 'none', border: 'none', marginBottom: '50px', marginTop: '70px'}}>No hay servicios asociados</p>
                 )}
               </ul>
             </div>

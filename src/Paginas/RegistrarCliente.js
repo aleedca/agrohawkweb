@@ -57,8 +57,8 @@ function RegistrarCuenta() {
             <div className="contenedor">
                 <div className="contenedor-terciario">
                     <div className="columna">
-                        <h1>Administrador</h1>
-                        <body>Registrar Cliente</body><br /><br /><br />
+                        <h1 style={{ marginTop: "30px" }}>Administrador</h1>
+                        <body>Registrar Cliente</body><br />
                         <div className="input-contenedor">
                             <FaUser className="icono" />
                             <input type="text" placeholder="Nombre" value={Nombre} onChange={(e) => setNombre(e.target.value)} />

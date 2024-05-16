@@ -111,8 +111,8 @@ function BuscarCliente() {
       <div className="contenedor">
         <div className="contenedor-terciario">
           <div className="columna">
-            <h1>Administrador</h1>
-            <body>Detalle Cliente</body><br /><br />
+            <h1 style={{marginTop: "30px"}}>Administrador</h1>
+            <body>Detalle Cliente</body><br />
 
             <div className="input-contenedor">
               <input type="text" placeholder="Nombre" value={Nombre} onChange={(e) => setNombre(e.target.value)} />
