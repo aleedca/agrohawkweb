@@ -150,12 +150,27 @@ ul li:hover {
 
 .contenedor .contenedor-terciario {
   width: 670px;
-  height: 660px;
+  height: 700px;
   padding: 10px;
 }
 
 .contenedor .columna {
   flex: 1;
+}
+
+.contenedor-scroll {
+  width: 100%;
+  max-height: 35vh;  /* Ajusta el valor según sea necesario */
+  overflow-y: auto;  /* Permite el desplazamiento vertical */
+  padding: 1px;
+  border: 1px solid #ccc;  /* Opcional, para resaltar el contenedor scrollable */
+  border-radius: 4px;
+}
+
+.columna-detalle {
+  flex: 1;
+  min-width: 45%;
+  padding: 10px;
 }
 
 .columna:first-child {
