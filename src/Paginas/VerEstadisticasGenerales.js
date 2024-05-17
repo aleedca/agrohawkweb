@@ -26,41 +26,36 @@ const VerEstadisticasGenerales = () => {
     };
 
     const calcularInformacionGeneral = (reportes) => {
-        let totalClientes = 0;
-        let totalDrones = 0;
         let totalHectareas = 0;
-        let totalCostos = 0;
         let totalServicios = 0;
+        let totalCostosColon = 0;
+        let totalCostosDolar = 0;
 
         reportes.forEach((reporte) => {
-            totalClientes += reporte.Top3Clientes.length;
-            totalDrones += reporte.Top3Drones.length;
             totalHectareas += reporte.HectareasFumigadas.total;
-            totalCostos +=
-                reporte.Costos.promedioColones + reporte.Costos.promedioDolares;
             totalServicios += reporte.Servicios.finalizados;
+            totalCostosColon += reporte.Costos.promedioColones;
+            totalCostosDolar += reporte.Costos.promedioDolares;
         });
 
         setInformacionGeneral({
-            totalClientes,
-            totalDrones,
             totalHectareas,
-            totalCostos,
             totalServicios,
+            totalCostosColon,
+            totalCostosDolar,
         });
     };
 
     const generarGraficos = () => {
-        const labels = ["Clientes", "Drones", "Hectáreas", "Costos", "Servicios"];
+        const labels = ["Hectáreas Fumigadas", "Servicios Finalizados", "Promedio Colones", "Promedio Doláres"];
     
         // Generar gráficos individuales para cada reporte
         reportes.forEach((reporte, index) => {
             const data = [
-                reporte.Top3Clientes.length,
-                reporte.Top3Drones.length,
                 reporte.HectareasFumigadas.total,
-                reporte.Costos.promedioColones + reporte.Costos.promedioDolares,
                 reporte.Servicios.finalizados,
+                reporte.Costos.promedioColones,
+                reporte.Costos.promedioDolares,
             ];
             const chartConfigs = generarConfiguracionesGrafico(index, labels, data);
             renderizarGraficos(chartConfigs);
@@ -69,11 +64,10 @@ const VerEstadisticasGenerales = () => {
         // Generar gráficos para la información general
         if (informacionGeneral) {
             const data = [
-                informacionGeneral.totalClientes,
-                informacionGeneral.totalDrones,
                 informacionGeneral.totalHectareas,
-                informacionGeneral.totalCostos,
                 informacionGeneral.totalServicios,
+                informacionGeneral.totalCostosColon,
+                informacionGeneral.totalCostosDolar,
             ];
             const chartConfigs = generarConfiguracionesGrafico("General", labels, data);
             renderizarGraficos(chartConfigs);
@@ -92,14 +86,12 @@ const VerEstadisticasGenerales = () => {
                             label: "Cantidad",
                             data: data,
                             backgroundColor: [
-                                "rgba(255, 99, 132, 0.5)",
                                 "rgba(54, 162, 235, 0.5)",
                                 "rgba(255, 206, 86, 0.5)",
                                 "rgba(75, 192, 192, 0.5)",
                                 "rgba(153, 102, 255, 0.5)",
                             ],
                             borderColor: [
-                                "rgba(255, 99, 132, 1)",
                                 "rgba(54, 162, 235, 1)",
                                 "rgba(255, 206, 86, 1)",
                                 "rgba(75, 192, 192, 1)",
@@ -139,14 +131,12 @@ const VerEstadisticasGenerales = () => {
                             label: "Cantidad",
                             data: data,
                             backgroundColor: [
-                                "rgba(255, 99, 132, 0.5)",
                                 "rgba(54, 162, 235, 0.5)",
                                 "rgba(255, 206, 86, 0.5)",
                                 "rgba(75, 192, 192, 0.5)",
                                 "rgba(153, 102, 255, 0.5)",
                             ],
                             borderColor: [
-                                "rgba(255, 99, 132, 1)",
                                 "rgba(54, 162, 235, 1)",
                                 "rgba(255, 206, 86, 1)",
                                 "rgba(75, 192, 192, 1)",
@@ -201,7 +191,7 @@ const VerEstadisticasGenerales = () => {
     return (
         <div className="fondo-secundario">
             <div className="contenedor" style={{ overflowY: 'scroll', height: '90%' }}>
-                <div style={{ display: "flex", marginTop: "1200px", alignItems: "center" }}></div>
+                <div style={{ display: "flex", marginTop: 600*reportes.length, alignItems: "center" }}></div>
                 <div style={{ display: "flex", flexDirection: "Column", alignItems: "center" }}>
                     {informacionGeneral && (
                         <div style={{ marginBottom: "60px", width: "100%" }}>
