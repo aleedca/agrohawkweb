@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import firestore from '../Firebase/firebase';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { tiposServicios, estados, tiposCosto, opcionesContrato } from '../Utils/Data';
+import LogoAgro from '../Assets/LogoAgro.png';
 import '../App.css';
 
 function RegistrarServicios() {
@@ -177,6 +178,9 @@ function RegistrarServicios() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="logo-container">
+          <img src={LogoAgro} alt="Logo" />
       </div>
     </div>
   );

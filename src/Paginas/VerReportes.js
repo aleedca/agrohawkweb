@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import firestore from '../Firebase/firebase';
 import { collection, getDocs } from 'firebase/firestore';
+import LogoAgro from '../Assets/LogoAgro.png';
 import '../App.css';
 
 function VerReportes() {
@@ -71,6 +72,9 @@ function VerReportes() {
                     </div>
                 </div>
             </div>
+        <div className="logo-container">
+            <img src={LogoAgro} alt="Logo" />
+        </div>
         </div>
     );
 }

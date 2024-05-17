@@ -3,6 +3,7 @@ import { FaUser, FaLock } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import firestore from '../Firebase/firebase';
+import LogoAgro from '../Assets/LogoAgro.png';
 import '../App.css';
 
 function IniciarSesion() {
@@ -62,6 +63,9 @@ function IniciarSesion() {
                         <button className="btn_secundario" onClick={navegarRegistrarCuenta}>Registrarse</button>
                     </div>
                 </div>
+            </div>
+            <div className="logo-container">
+                <img src={LogoAgro} alt="Logo" />
             </div>
         </div>
     );

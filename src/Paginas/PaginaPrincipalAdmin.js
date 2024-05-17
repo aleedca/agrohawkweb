@@ -1,6 +1,7 @@
 // Eve esta aqui
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import LogoAgro from '../Assets/LogoAgro.png';
 import '../App.css';
 
 function AdminPaginaPrincipal() {
@@ -41,6 +42,9 @@ function AdminPaginaPrincipal() {
                     </div>
                 </div>
             </div>
+        <div className="logo-container">
+            <img src={LogoAgro} alt="Logo" />
+        </div>
         </div>
     );
 }

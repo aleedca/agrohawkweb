@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { formatearFecha } from '../Utils/Funciones';
+import LogoAgro from '../Assets/LogoAgro.png';
 import '../App.css';
 
 function ListaServicios() {
@@ -61,6 +62,9 @@ function ListaServicios() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="logo-container">
+          <img src={LogoAgro} alt="Logo" />
       </div>
     </div>
   );

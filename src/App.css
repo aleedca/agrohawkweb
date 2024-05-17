@@ -270,3 +270,15 @@ input[type=password], input[type=date], select, p, textarea{
   padding: 12px;
   width: 350px;
 }
+
+.logo-container {
+  position: fixed;
+  bottom: 0px;
+  right: 20px;
+}
+
+.logo-container img {
+  width: 100px;
+  height: auto;
+  opacity: 60%;
+}

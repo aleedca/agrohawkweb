@@ -3,6 +3,7 @@ import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import firestore from '../Firebase/firebase';
 import { collection, addDoc } from 'firebase/firestore';
+import LogoAgro from '../Assets/LogoAgro.png';
 import '../App.css';
 
 function RegistrarCuenta() {
@@ -89,6 +90,9 @@ function RegistrarCuenta() {
                     <button className="btn_secundario" onClick={navegarIniciarSesion}>Volver a la página principal</button>
                 </div>
             </div>
+        <div className="logo-container">
+            <img src={LogoAgro} alt="Logo" />
+        </div>
         </div>
     );
 }

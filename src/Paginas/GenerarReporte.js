@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { formatearFecha } from '../Utils/Funciones';
 import firestore from '../Firebase/firebase';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
+import LogoAgro from '../Assets/LogoAgro.png';
 import '../App.css';
 
 function GenerarReporte() {
@@ -216,6 +217,9 @@ function GenerarReporte() {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="logo-container">
+                <img src={LogoAgro} alt="Logo" />
             </div>
         </div>
     );

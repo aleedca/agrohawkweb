@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { getDocs, collection, query, where } from 'firebase/firestore';
 import firestore from '../Firebase/firebase';
 import { FaUser } from 'react-icons/fa';
+import LogoAgro from '../Assets/LogoAgro.png';
 import '../App.css';
 
 function BuscarServicio() {
@@ -53,6 +54,9 @@ function BuscarServicio() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="logo-container">
+          <img src={LogoAgro} alt="Logo" />
       </div>
     </div>
   );
